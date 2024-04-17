@@ -3,16 +3,20 @@
 @tailwind utilities;
 
 :root {
-    --main-color: #23e066;
+    --main-color: #6b0069;
     --outline-color: #80bdff;
+	--primary-10:#FCF5FC;
   }
   
 
 .active, .page-item.active .page-link {
-    background-color: var(--main-color) !important;
-    border-color: var(--main-color) !important;
+    background-color: var(--primary-10) !important;
+    border-color: var(--primary-10) !important;
+	color: var(--main-color);
 }
-
+.nonactive{
+	color: rgba(112, 111, 111, 0.514);
+}
 .custom-file{
     margin-top: 3.2px;
 }
