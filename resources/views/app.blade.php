@@ -124,7 +124,8 @@
     <script src="{{ asset('assets/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
     <!-- dropzonejs -->
     <script src="{{ asset('assets/plugins/dropzone/min/dropzone.min.js') }}"></script>
-
+    {{-- apex chart --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
