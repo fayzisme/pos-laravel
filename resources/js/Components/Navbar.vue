@@ -1,165 +1,117 @@
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs-fix-scroll/vue3';
 
-const showingNavigationDropdown = ref(false);
-
-  const mobileBreakPointPX = 640
-  const tabletBreakPointPX = 768
-
-  const sidebarWidth = ref('16rem')
-  const sidebarMinimizedWidth = ref(undefined)
-
-  const isMobile = ref(false)
-  const isTablet = ref(false)
-  let isSidebarMinimized  = false
-  const checkIsTablet = () => window.innerWidth <= tabletBreakPointPX
-  const checkIsMobile = () => window.innerWidth <= mobileBreakPointPX
-
-  const onResize = () => {
-    isSidebarMinimized = checkIsTablet()
-
-    isMobile.value = checkIsMobile()
-    isTablet.value = checkIsTablet()
-    sidebarMinimizedWidth.value = isMobile.value ? '0' : '4.5rem'
-    sidebarWidth.value = isTablet.value ? '100%' : '16rem'
-  }
-
-  onMounted(() => {
-    window.addEventListener('resize', onResize)
-  })
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('resize', onResize)
-  })
-
-  onResize()
-
-  const isFullScreenSidebar = computed(() => isTablet.value && !isSidebarMinimized)
-
-  const onCloseSidebarButtonClick = () => {
-    isSidebarMinimized = true
-  }
 </script>
 <template>
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <div class="row">
-            <div class="col" style="display: flex;">
-                <!-- Left navbar links -->
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                  </li>
-                </ul>
-            
-                <!-- Right navbar links -->
-                <ul class="navbar-nav ml-auto">
-                  <li class="nav-item">
-                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                      <i class="fas fa-expand-arrows-alt"></i>
-                    </a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <Dropdown align="right" width="48">
-                        <template #trigger>
-                            <span class="inline-flex rounded-md">
-                                <button
-                                    type="button"
-                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                >
-                                    {{ $page.props.auth.user.name }}
-    
-                                    <svg
-                                        class="ml-2 -mr-0.5 h-4 w-4"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                </button>
-                            </span>
-                        </template>
-    
-                        <template #content>
-                            <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                            <DropdownLink :href="route('logout')" method="post" as="button">
-                                Log Out
-                            </DropdownLink>
-                        </template>
-                    </Dropdown>
-                  </li>
-                </ul>
-            
-                <!-- Hamburger -->
-                <div class="-mr-2 flex items-center sm:hidden">
-                    <button
-                        @click="showingNavigationDropdown = !showingNavigationDropdown"
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                    >
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+    <div class="sticky top-0 ml-64 bg-white p-8 text-white z-50 flex justify-between">
+        <div class="w-1/6">
+            <form action="#" class="search">
+                <button class="search__button">
+                    <div class="search__icon">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 20 20">
+                            <title>magnifying-glass</title>
                             <path
-                                :class="{
-                                    hidden: showingNavigationDropdown,
-                                    'inline-flex': !showingNavigationDropdown,
-                                }"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M4 6h16M4 12h16M4 18h16"
-                            />
-                            <path
-                                :class="{
-                                    hidden: !showingNavigationDropdown,
-                                    'inline-flex': showingNavigationDropdown,
-                                }"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
+                                d="M17.545 15.467l-3.779-3.779c0.57-0.935 0.898-2.035 0.898-3.21 0-3.417-2.961-6.377-6.378-6.377s-6.186 2.769-6.186 6.186c0 3.416 2.961 6.377 6.377 6.377 1.137 0 2.2-0.309 3.115-0.844l3.799 3.801c0.372 0.371 0.975 0.371 1.346 0l0.943-0.943c0.371-0.371 0.236-0.84-0.135-1.211zM4.004 8.287c0-2.366 1.917-4.283 4.282-4.283s4.474 2.107 4.474 4.474c0 2.365-1.918 4.283-4.283 4.283s-4.473-2.109-4.473-4.474z">
+                            </path>
                         </svg>
-                    </button>
-                </div>
-            </div>
+                    </div>
+                </button>
+                <input type="text" class="search__input" placeholder="Search...">
+            </form>
         </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div
-        :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-        class="sm:hidden"
-    >
-        <div class="pt-2 pb-3 space-y-1">
-            <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                Dashboard
-            </ResponsiveNavLink>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">
-                    {{ $page.props.auth.user.name }}
-                </div>
-                <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-                <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                    Log Out
-                </ResponsiveNavLink>
-            </div>
+        <div class="inline-flex justify-end items-center">
+            <ul class="inline-flex border-b-2">
+                <a href="">
+                    <li class="px-3 py-1 text-base font-semibold">
+                        Kemarin
+                    </li>
+                </a>
+                <a href="">
+                    <li class="px-3 py-1 text-base font-semibold active" >
+                        Hari ini
+                    </li>
+                </a>
+                <a href="">
+                    <li class="px-3 py-1 text-base font-semibold">
+                        Minggu ini
+                    </li>
+                </a>
+                <a href="">
+                    <li class="px-3 py-1 text-base font-semibold">
+                        Bulan
+                    </li>
+                </a>
+                <a href="">
+                    <li class="px-3 py-1 text-base font-semibold">
+                        Tahun
+                    </li>
+                </a>
+            </ul>
         </div>
     </div>
-  </nav>
+
 </template>
+<style scoped>
+.actives{
+    border-bottom: 3px solid #bc06f3;
+}
+li {
+    border-bottom: 2.5px solid #bc06f336;
+}
+.search {
+  flex: 0 0 90%;
+  display: flex;
+  align-items: center;
+}
+
+.search__input {
+  font-family: "Open Sans", sans-serif;
+  font-size: 17px;
+  color: #333333;
+  background-color: #f4f2f2;
+  border: none;
+  padding: 10px 72px 10px 42px;
+  border-radius: 1000px;
+  width: 90%;
+  margin-left: -34px;
+  margin-right: -66px;
+  transition: all 0.2s;
+}
+
+.search__input:focus {
+  outline: none;
+  width: 91%;
+  background-color: #f0eeee;
+}
+
+.search__input::-webkit-input-placeholder {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: 500;
+  color: #999999;
+}
+
+.search__button {
+  border: none;
+  background-color: transparent;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.search__button:focus {
+  outline: none;
+}
+
+.search__button:active {
+  transform: translateY(2px);
+}
+
+.search__icon {
+  height: 20px;
+  width: 20px;
+  fill: #999999;
+}
+
+
+</style>

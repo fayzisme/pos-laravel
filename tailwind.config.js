@@ -11,6 +11,7 @@ export default {
 
     theme: {
         colors: {
+            'secondary':'#6b0069',
             'green': '#23e066',
           },
         extend: {
